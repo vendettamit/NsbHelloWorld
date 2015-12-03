@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Alexey Sednev";
+}
+
+<div class="jumbotron">
+	<h1>NServiceBus Hello World</h1>
+</div>
+
+<div class="row">
+
+	<script type="text/javascript">
+
+		function generate() {
+
+			$("#thebutton").hide();
+			$("#theverbiage").show();
+
+			$.post("/Home/KickOff", function (data) {
+				$("#result").html(data);
+				$("#result").show();
+				$("#theverbiage").hide();
+			});
+		}
+
+	</script>
+
+	<button id="thebutton" class="btn btn-danger" onclick="generate()">Generate Hello World using NServiceBus</button>
+	<div id="theverbiage" style="display: none;">
+		Hold Tight, Over-Engineered Hello World takes time to bake
+		<img src="~/Content/ajax-loader.gif"/>
+	</div>
+	<div id="result"></div>
+	<div id="helloWorldContent"></div>
+
+
+	<br/><br/>
+	If you like what you see, check out the sourcecode at <a href="https://github.com/asednev/NsbHelloWorld">https://github.com/asednev/NsbHelloWorld</a>
+
+</div>
