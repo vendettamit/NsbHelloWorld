@@ -2,7 +2,7 @@
 
 namespace Contracts.Letters
 {
-	public class LetterGenerated : IEvent
+	public class OrderLetter : IMessage
 	{
 		public string RequestId { get; set; }
 		public char Letter { get; set; }

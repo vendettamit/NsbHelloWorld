@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contracts;
@@ -10,12 +11,14 @@ namespace StartMe
 {
 	class HelloWorldSaga : Saga<HelloWorldData>,
 		IAmStartedByMessages<KickOff>,
-		IHandleMessages<LetterGenerated>
+		IHandleMessages<LetterGenerated>,
+		IHandleMessages<LetterOrdered>
 	{
 		protected override void ConfigureHowToFindSaga(SagaPropertyMapper<HelloWorldData> mapper)
 		{
 			mapper.ConfigureMapping<KickOff>(x => x.RequestId).ToSaga(x => x.RequestId);
 			mapper.ConfigureMapping<LetterGenerated>(x => x.RequestId).ToSaga(x => x.RequestId);
+			mapper.ConfigureMapping<LetterOrdered>(x => x.RequestId).ToSaga(x => x.RequestId);
 		}
 
 		public void Handle(KickOff message)
@@ -38,14 +41,29 @@ namespace StartMe
 
 		public void Handle(LetterGenerated message)
 		{
-			Console.WriteLine("received {0}", message.Letter);
+			Bus.Send(new OrderLetter {RequestId = message.RequestId, Letter = message.Letter});
+		}
+
+		public void Handle(LetterOrdered message)
+		{
+			//discard unnecessary letters
+			if(message.Order < 0)
+				return;
+
+			//discard duplicates
+			if (Data.Chars[message.Order] != '\0')
+				return;
+
 			Data.Chars[message.Order] = message.Letter;
+			Console.WriteLine("received {0}, [{1}]", message.Letter, string.Join("", Data.Chars));
 
 			//check if pharase is complete
 			if (Data.Chars.Any(x => x == '\0'))
 				return;
 
 			Console.WriteLine("*** [{0}]] ***", string.Join("", Data.Chars));
+
+			Bus.Send(new KillGenerator());
 
 			MarkAsComplete();
 		}

@@ -13,6 +13,7 @@ namespace NsbHelloWorld.Web.Controllers
 		public ActionResult KickOff()
 		{
 			//what did you expect to see here? it's a hack
+			//real implementation is coming soon
 			Thread.Sleep(5000);
 
 			return Content("Hello World");

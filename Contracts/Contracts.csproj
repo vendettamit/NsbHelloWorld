@@ -45,8 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KickOff.cs" />
+    <Compile Include="Letters\KillGenerator.cs" />
     <Compile Include="Letters\LetterGenerated.cs" />
+    <Compile Include="Letters\LetterOrdered.cs" />
     <Compile Include="Letters\LetterRequest.cs" />
+    <Compile Include="Letters\OrderLetter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
