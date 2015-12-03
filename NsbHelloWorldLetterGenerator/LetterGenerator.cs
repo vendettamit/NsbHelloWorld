@@ -46,7 +46,8 @@ namespace NsbHelloWorld.LetterGenerator
 
 					//prioritize some chars
 					if (n >= 58 && n <= 64) n = 'l';
-					if (n >= 91 && n < 96) n = 'o';
+					if (n >= 91 && n <= 93) n = 'l';
+					if (n >= 94 && n < 96) n = 'o';
 
 					var letterGenerated = new LetterGenerated { RequestId = requestId, Letter = (char)n };
 					_bus.Publish(letterGenerated);
