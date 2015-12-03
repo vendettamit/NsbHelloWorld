@@ -8,7 +8,7 @@ namespace NsbHelloWorld.LetterGenerator
 	class LetterGenerator : IWantToRunWhenBusStartsAndStops, IHandleMessages<KillGenerator>
 	{
 		private readonly IBus _bus;
-		private Thread _thread;
+		private static Thread _thread;
 
 		public LetterGenerator(IBus bus)
 		{

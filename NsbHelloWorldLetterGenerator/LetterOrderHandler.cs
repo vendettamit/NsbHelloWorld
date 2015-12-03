@@ -19,9 +19,12 @@ namespace NsbHelloWorld.LetterGenerator
 		{
 			var requestId = message.RequestId;
 
-			if (_s.IndexOf(message.Letter) == _s.LastIndexOf(message.Letter))
+			var index = _s.IndexOf(message.Letter);
+			if (index == _s.LastIndexOf(message.Letter))
 			{
-				_bus.Publish(new LetterOrdered { Letter = message.Letter, Order = _s.IndexOf(message.Letter), RequestId = requestId});
+				if (index < 0) return;
+
+				_bus.Publish(new LetterOrdered { Letter = message.Letter, Order = index, RequestId = requestId});
 				return;
 			}
 
